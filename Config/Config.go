@@ -177,7 +177,18 @@ func (c *YoutubeConfig) GetPlayerTokens() []string {
 	c.Mutex.RLock()
 	defer c.Mutex.RUnlock() // Read lock to ensure no write operations occur during token retrieval
 
-	return c.PlayerTokens
+	// Return a copy to prevent race conditions if the slice is modified
+
+	if c.PlayerTokens == nil {
+
+		return nil
+
+	}
+
+	TokensCopy := make([]string, len(c.PlayerTokens))
+	copy(TokensCopy, c.PlayerTokens)
+	
+	return TokensCopy
 	
 }
 
@@ -187,6 +198,25 @@ func (c *YoutubeConfig) GetSTS() int {
 	defer c.Mutex.RUnlock()
 
 	return c.STS
+
+}
+
+func (c *YoutubeConfig) GetInnertubeAPIKey() string {
+
+	c.Mutex.RLock()
+	defer c.Mutex.RUnlock()
+
+	return c.InnertubeAPIKey
+
+}
+
+func (c *YoutubeConfig) GetInnertubeClient() InnertubeClient {
+
+	c.Mutex.RLock()
+	defer c.Mutex.RUnlock()
+
+	// Return a copy of the client struct to prevent race conditions
+	return c.InnertubeContext.Client
 
 }
 

@@ -65,13 +65,13 @@ func Info(URLOrID string, Options *InfoOptions, Proxy *Proxy, Cookies *string) (
 
 			Client: Structs.InnertubeClient{
 
-				ClientName:    Config.Current.InnertubeContext.Client.ClientName,
-				ClientVersion: Config.Current.InnertubeContext.Client.ClientVersion,
-				DeviceMake:    Config.Current.InnertubeContext.Client.DeviceMake,
-				DeviceModel:   Config.Current.InnertubeContext.Client.DeviceModel,
-				UserAgent:     Config.Current.InnertubeContext.Client.UserAgent,
-				OsName:        Config.Current.InnertubeContext.Client.OsName,
-				OsVersion:     Config.Current.InnertubeContext.Client.OsVersion,
+				ClientName:    Config.Current.GetInnertubeClient().ClientName,
+				ClientVersion: Config.Current.GetInnertubeClient().ClientVersion,
+				DeviceMake:    Config.Current.GetInnertubeClient().DeviceMake,
+				DeviceModel:   Config.Current.GetInnertubeClient().DeviceModel,
+				UserAgent:     Config.Current.GetInnertubeClient().UserAgent,
+				OsName:        Config.Current.GetInnertubeClient().OsName,
+				OsVersion:     Config.Current.GetInnertubeClient().OsVersion,
 
 			},
 
@@ -127,7 +127,7 @@ func Info(URLOrID string, Options *InfoOptions, Proxy *Proxy, Cookies *string) (
 
 	// Creating request
 
-	Req, Err := http.NewRequest("POST", Functions.GetAPIURL(Config.Current.InnertubeAPIKey, "player"), bytes.NewBuffer(JSONBody))
+	Req, Err := http.NewRequest("POST", Functions.GetAPIURL(Config.Current.GetInnertubeAPIKey(), "player"), bytes.NewBuffer(JSONBody))
 
 	if Err != nil {
 
@@ -139,7 +139,7 @@ func Info(URLOrID string, Options *InfoOptions, Proxy *Proxy, Cookies *string) (
 
 	Req.Header.Set("Origin", "https://www.youtube.com")
 	Req.Header.Set("Content-Type", "application/json")
-	Req.Header.Set("User-Agent", Config.Current.InnertubeContext.Client.UserAgent)
+	Req.Header.Set("User-Agent", Config.Current.GetInnertubeClient().UserAgent)
 
 	if Cookies != nil {
 
@@ -213,12 +213,21 @@ func Info(URLOrID string, Options *InfoOptions, Proxy *Proxy, Cookies *string) (
 			
 			if ManifestURL, Ok := StreamingData["hlsManifestUrl"].(string); Ok && ManifestURL != "" {
 
-				HLSFormats, Err := Functions.FetchHLSFormats(ManifestURL, &Structs.Proxy{ // again, same as above
-					Host:     Proxy.Host,
-					Port:     Proxy.Port,
-					UserPass: Proxy.UserPass,
+				var ProxyStruct *Structs.Proxy
 
-				}, Config.Current.InnertubeContext.Client.UserAgent)
+				if Proxy != nil {
+
+					ProxyStruct = &Structs.Proxy{
+
+						Host:     Proxy.Host,
+						Port:     Proxy.Port,
+						UserPass: Proxy.UserPass,
+
+					}
+
+				}
+
+				HLSFormats, Err := Functions.FetchHLSFormats(ManifestURL, ProxyStruct, Config.Current.GetInnertubeClient().UserAgent)
 
 				if Err == nil {
 
