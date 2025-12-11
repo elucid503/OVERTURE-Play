@@ -51,7 +51,7 @@ var Current = &YoutubeConfig{
 	PlayerJSURL:  "",
 	PlayerTokens: nil,
 
-	mu:           sync.RWMutex{},
+	Mutex:           sync.RWMutex{},
 
 }
 
@@ -67,14 +67,14 @@ type YoutubeConfig struct {
 	PlayerJSURL         string
 	PlayerTokens        []string
 
-	mu                  sync.RWMutex
+	Mutex                  sync.RWMutex
 
 }
 
 func (c *YoutubeConfig) Update(Lang string) error {
 
-	c.mu.Lock()
-	defer c.mu.Unlock() // Write lock to prevent concurrent updates
+	c.Mutex.Lock()
+	defer c.Mutex.Unlock() // Write lock to prevent concurrent updates
 
 	YouTubePageResp, ErrReadingBody := http.Get(fmt.Sprintf("https://www.youtube.com/?hl=%s", Lang))
 
@@ -174,8 +174,8 @@ func (c *YoutubeConfig) Update(Lang string) error {
 
 func (c *YoutubeConfig) GetPlayerTokens() []string {
 
-	c.mu.RLock()
-	defer c.mu.RUnlock() // Read lock to ensure no write operations occur during token retrieval
+	c.Mutex.RLock()
+	defer c.Mutex.RUnlock() // Read lock to ensure no write operations occur during token retrieval
 
 	return c.PlayerTokens
 	
@@ -183,8 +183,8 @@ func (c *YoutubeConfig) GetPlayerTokens() []string {
 
 func (c *YoutubeConfig) GetSTS() int {
 
-	c.mu.RLock()
-	defer c.mu.RUnlock()
+	c.Mutex.RLock()
+	defer c.Mutex.RUnlock()
 
 	return c.STS
 
