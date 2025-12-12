@@ -3,9 +3,9 @@ package Public
 import (
 	"fmt"
 
-	"OVERTURE/Play/Config"
-	"OVERTURE/Play/Functions"
-	"OVERTURE/Play/Structs"
+	"Overture-Play/Config"
+	"Overture-Play/Functions"
+	"Overture-Play/Structs"
 )
 
 // HLSOptions configures HLS manifest and playlist fetching

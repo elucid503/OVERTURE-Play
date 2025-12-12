@@ -1,10 +1,10 @@
 package Public
 
 import (
-	"OVERTURE/Play/Config"
-	"OVERTURE/Play/Functions"
-	"OVERTURE/Play/Structs"
-	"OVERTURE/Play/Utils"
+	"Overture-Play/Config"
+	"Overture-Play/Functions"
+	"Overture-Play/Structs"
+	"Overture-Play/Utils"
 	"bytes"
 	"encoding/json"
 	"fmt"

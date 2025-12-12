@@ -1,7 +1,7 @@
 package Functions
 
 import (
-	"OVERTURE/Play/Structs"
+	"Overture-Play/Structs"
 	"fmt"
 	"io"
 	"net/http"

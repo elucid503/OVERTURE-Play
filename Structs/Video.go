@@ -1,7 +1,7 @@
 package Structs
 
 import (
-	"OVERTURE/Play/Utils"
+	"Overture-Play/Utils"
 	"fmt"
 	"net/url"
 	"strconv"
