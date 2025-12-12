@@ -1,8 +1,8 @@
 package Config
 
 import (
-	"Overture-Play/Functions"
-	"Overture-Play/Utils"
+	"github.com/elucid503/Overture-Play/Functions"
+	"github.com/elucid503/Overture-Play/Utils"
 	"fmt"
 	"io"
 	"net/http"

@@ -1,10 +1,10 @@
 package Public
 
 import (
-	"Overture-Play/Config"
-	"Overture-Play/Functions"
-	"Overture-Play/Structs"
-	"Overture-Play/Utils"
+	"github.com/elucid503/Overture-Play/Config"
+	"github.com/elucid503/Overture-Play/Functions"
+	"github.com/elucid503/Overture-Play/Structs"
+	"github.com/elucid503/Overture-Play/Utils"
 	"bytes"
 	"encoding/json"
 	"fmt"

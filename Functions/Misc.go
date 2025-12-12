@@ -1,7 +1,7 @@
 package Functions
 
 import (
-	"Overture-Play/Structs"
+	"github.com/elucid503/Overture-Play/Structs"
 	"encoding/json"
 	"fmt"
 	"io"

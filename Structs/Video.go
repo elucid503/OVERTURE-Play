@@ -1,7 +1,7 @@
 package Structs
 
 import (
-	"Overture-Play/Utils"
+	"github.com/elucid503/Overture-Play/Utils"
 	"fmt"
 	"net/url"
 	"strconv"
