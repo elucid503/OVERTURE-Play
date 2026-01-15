@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/elucid503/Overture-Play/POToken"
@@ -34,7 +33,7 @@ func main() {
 
 	}
 
-	// Fetch video info
+	// Fetches video info
 
 	Response, Error := Public.Info("KqBc7R86Nbw", &Public.InfoOptions{GetHLSFormats: true}, nil, nil)
 
@@ -45,28 +44,8 @@ func main() {
 
 	}
 
-	// Display visitor_data (used as content binding for PO token)
-
 	fmt.Println("\nVideo Info:")
 	fmt.Println("Visitor Data:", Response.VisitorData[:min(40, len(Response.VisitorData))], "...")
-
-	if Response.DataSyncID != "" {
-
-		fmt.Println("Data Sync ID:", Response.DataSyncID)
-		
-		// Extract session ID (first part before ||) for content binding
-		
-		SessionID := Response.DataSyncID
-		
-		if idx := strings.Index(Response.DataSyncID, "||"); idx > 0 {
-		
-			SessionID = Response.DataSyncID[:idx]
-		
-		}
-		
-		fmt.Println("Session ID (content binding):", SessionID)
-
-	}
 
 	// Streaming Status
 
@@ -94,15 +73,11 @@ func main() {
 
 	fmt.Println("HLS URL:", HLSManifest[0:min(50, len(HLSManifest))], "...")
 
-	// Configure HLS options with automatic PO token generation
-	// Without cookie - the bgutil server handles its own session
-
 	HLSOptions := &Public.HLSOptions{
 
-		Generator:       Generator,            // Auto-generate tokens
-		VisitorData:     Response.VisitorData, // Content binding for token
-		DataSyncID:      "",                   // Empty - not logged in
-		IsAuthenticated: false,                // Not logged in
+		Generator:       Generator,
+		VisitorData:     Response.VisitorData,
+		IsAuthenticated: false,
 
 	}
 
@@ -110,9 +85,7 @@ func main() {
 
 	if Generator != nil {
 
-		fmt.Println("\nGenerating PO Token for GVS (using visitor_data)...")
-
-		// Not logged in - use visitor_data as content binding
+		fmt.Println("\nGenerating PO Token for GVS...")
 
 		Token, TokenErr := Generator.GetPoTokenForGVS(Response.VisitorData, "", false)
 
@@ -187,7 +160,7 @@ func main() {
 
 		}
 
-		time.Sleep(1000 * time.Millisecond)
+		time.Sleep(500 * time.Millisecond)
 
 	}
 
