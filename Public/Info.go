@@ -1,16 +1,18 @@
 package Public
 
 import (
-	"github.com/elucid503/Overture-Play/Config"
-	"github.com/elucid503/Overture-Play/Functions"
-	"github.com/elucid503/Overture-Play/Structs"
-	"github.com/elucid503/Overture-Play/Utils"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
+
+	"github.com/elucid503/Overture-Play/Config"
+	"github.com/elucid503/Overture-Play/Functions"
+	"github.com/elucid503/Overture-Play/POToken"
+	"github.com/elucid503/Overture-Play/Structs"
+	"github.com/elucid503/Overture-Play/Utils"
 )
 
 type InfoOptions struct {
@@ -37,7 +39,7 @@ func Info(URLOrID string, Options *InfoOptions, Proxy *Proxy, Cookies *string) (
 
 	}
 
-	 SuppliedID := Functions.GetVideoID(URLOrID)
+	SuppliedID := Functions.GetVideoID(URLOrID)
 
 	if SuppliedID == nil {
 
@@ -207,11 +209,20 @@ func Info(URLOrID string, Options *InfoOptions, Proxy *Proxy, Cookies *string) (
 
 	Video := Structs.CreateYoutubeVideo(ParsedResp, Config.Current.GetPlayerTokens())
 
+	// Extract visitor_data and data_sync_id for PO Token support
+
+	Video.VisitorData = POToken.ExtractVisitorData(ParsedResp)
+	Video.DataSyncID = POToken.ExtractDataSyncID(ParsedResp)
+
 	if Options.GetHLSFormats {
 
 		if StreamingData, Ok := ParsedResp["streamingData"].(map[string]interface{}); Ok {
 			
 			if ManifestURL, Ok := StreamingData["hlsManifestUrl"].(string); Ok && ManifestURL != "" {
+
+				// Store the original HLS manifest URL for PO Token application
+
+				Video.HLSManifestURL = ManifestURL
 
 				var ProxyStruct *Structs.Proxy
 

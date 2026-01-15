@@ -1,21 +1,27 @@
 package Structs
 
 import (
-	"github.com/elucid503/Overture-Play/Utils"
 	"fmt"
 	"net/url"
 	"strconv"
 	"strings"
+
+	"github.com/elucid503/Overture-Play/Utils"
 )
 
 // Struct
 
 type YoutubeVideo struct {
 
-	JSON         map[string]interface{}
-	HLSFormats   []Format
-
+	JSON          map[string]interface{}
+	HLSFormats    []Format
 	NormalFormats []Format
+
+	// PO Token related fields
+
+	VisitorData   string
+	DataSyncID    string
+	HLSManifestURL string
 
 }
 
