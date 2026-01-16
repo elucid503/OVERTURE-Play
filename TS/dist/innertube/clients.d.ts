@@ -1,0 +1,22 @@
+import { ClientConfig } from "./config.js";
+export declare const Web: ClientConfig;
+export declare const WebSafari: ClientConfig;
+export declare const WebEmbedded: ClientConfig;
+export declare const WebMusic: ClientConfig;
+export declare const WebCreator: ClientConfig;
+export declare const Android: ClientConfig;
+export declare const AndroidSDKLess: ClientConfig;
+export declare const AndroidVR: ClientConfig;
+export declare const IOS: ClientConfig;
+export declare const MWeb: ClientConfig;
+export declare const TV: ClientConfig;
+export declare const TVDowngraded: ClientConfig;
+export declare const TVSimply: ClientConfig;
+export declare const TVEmbedded: ClientConfig;
+export declare function DefaultClients(): ClientConfig[];
+export declare function DefaultWebClients(): ClientConfig[];
+export declare function DefaultAndroidClients(): ClientConfig[];
+export declare function DefaultAuthenticatedClients(): ClientConfig[];
+export declare function DefaultPremiumClients(): ClientConfig[];
+export declare function GetClientByName(name: string): ClientConfig | null;
+//# sourceMappingURL=clients.d.ts.map

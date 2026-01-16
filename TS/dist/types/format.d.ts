@@ -1,0 +1,40 @@
+import { Range } from "./range.js";
+export interface Format {
+    ITag: number;
+    URL: string;
+    MimeType: string;
+    Quality: string;
+    QualityLabel: string;
+    Width: number;
+    Height: number;
+    FPS: number;
+    Bitrate: number;
+    AverageBitrate: number;
+    ContentLength: number;
+    AudioQuality: string;
+    AudioChannels: number;
+    AudioSampleRate: number;
+    Codec: string;
+    VideoCodec: string;
+    AudioCodec: string;
+    IndexRange: Range | null;
+    InitRange: Range | null;
+    HasDRM: boolean;
+    SignatureCipher: string;
+    Signature: string;
+    SignatureParam: string;
+    NParam: string;
+    ClientName: string;
+}
+export declare function HasVideo(f: Format): boolean;
+export declare function HasAudio(f: Format): boolean;
+export declare function IsAudioOnly(f: Format): boolean;
+export declare function IsVideoOnly(f: Format): boolean;
+export declare function IsAdaptive(f: Format): boolean;
+export declare function SupportsRange(f: Format): boolean;
+export declare function Extension(f: Format): string;
+export declare function FormatID(f: Format): string;
+export declare function FormatString(f: Format): string;
+export declare function QualityRank(quality: string): number;
+export declare function CreateEmptyFormat(): Format;
+//# sourceMappingURL=format.d.ts.map
